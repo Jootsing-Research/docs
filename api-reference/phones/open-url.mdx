@@ -1,0 +1,152 @@
+---
+title: Open URL
+description: Open a URL on the phone through the Use TapKit shortcut
+api: POST /v1/phones/{phone_id}/open-url
+---
+
+Open a URL on the phone through the **Use TapKit** shortcut.
+
+TapKit enqueues an `open_url` shortcut action for the phone, then triggers the shortcut through the selected Mac. The shortcut fetches the pending action and opens the URL from the action payload.
+
+<Warning>
+This endpoint currently does not validate URLs. Send a full URL, including the scheme, such as `https://www.apple.com`.
+</Warning>
+
+## Request
+
+```bash
+curl -X POST https://api.tapkit.ai/v1/phones/{phone_id}/open-url \
+  -H "X-API-Key: joot_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://www.apple.com"}'
+```
+
+You can also authenticate with a bearer token:
+
+```bash
+curl -X POST https://api.tapkit.ai/v1/phones/{phone_id}/open-url \
+  -H "Authorization: Bearer your_token" \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://www.apple.com"}'
+```
+
+### Path Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `phone_id` | `string` | The phone identifier |
+
+### Query Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `async` | `boolean` | `false` | Return immediately after enqueueing the action and trigger the shortcut in the background |
+
+### Request Body
+
+```json
+{
+  "url": "https://www.apple.com"
+}
+```
+
+With `consume_mode`:
+
+```json
+{
+  "url": "https://www.apple.com",
+  "consume_mode": "pop"
+}
+```
+
+| Field | Type | Required | Default | Description |
+|-------|------|----------|---------|-------------|
+| `url` | `string` | Yes | - | URL to open on the phone |
+| `consume_mode` | `string` | No | `pop` | How the shortcut action is consumed. Allowed values: `pop`, `ack` |
+
+## Response
+
+**Status: 200 OK**
+
+```json
+{
+  "action_id": "d9083489-5c13-43e8-90ef-52fa9c5a2663",
+  "job_id": "aea3fdfb-ec3d-4823-bbac-0b5c64497ebf"
+}
+```
+
+## Behavior
+
+The endpoint:
+
+1. Validates that the phone belongs to the authenticated organization.
+2. Requires an active subscription.
+3. Requires the phone to be active.
+4. Requires the phone to have an online, selected Mac.
+5. Creates a tracking job with action type `open_url`.
+6. Enqueues a shortcut action for the phone.
+7. Triggers the **Use TapKit** shortcut through the Mac and Switch Control.
+
+The enqueued shortcut action looks like this:
+
+```json
+{
+  "action_type": "open_url",
+  "payload": {
+    "url": "https://www.apple.com"
+  },
+  "consume_mode": "pop",
+  "job_id": "<job_id>"
+}
+```
+
+The phone shortcut polls for work using:
+
+```http
+POST /v1/shortcut/next-action
+X-Shortcut-Token: <phone shortcut token>
+```
+
+The poll response contains the pending action:
+
+```json
+{
+  "pending": true,
+  "action": {
+    "id": "<action_id>",
+    "action_type": "open_url",
+    "payload": {
+      "url": "https://www.apple.com"
+    },
+    "consume_mode": "pop",
+    "job_id": "<job_id>"
+  }
+}
+```
+
+The shortcut handles `action_type == "open_url"` by opening `payload.url`.
+
+## Consume Modes
+
+| Mode | Behavior |
+|------|----------|
+| `pop` | The action is consumed as soon as the shortcut fetches it. |
+| `ack` | The shortcut must call `/v1/shortcut/action-complete` after handling the action. |
+
+## Async Mode
+
+Without `async=true`, the API waits while it attempts to trigger the shortcut, then returns after that trigger attempt.
+
+With `async=true`, the API returns immediately after enqueueing the action and starts the shortcut trigger in the background.
+
+```bash
+curl -X POST "https://api.tapkit.ai/v1/phones/{phone_id}/open-url?async=true" \
+  -H "X-API-Key: joot_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://www.apple.com"}'
+```
+
+## Related
+
+- [Use TapKit Shortcut](/setup/shortcuts)
+- [Copy Text](/api-reference/phones/copy-text)

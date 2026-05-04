@@ -26,7 +26,8 @@
             "pages": [
               "setup/mac-app",
               "setup/phone",
-              "setup/switch-control"
+              "setup/switch-control",
+              "setup/shortcuts"
             ]
           },
           {
@@ -166,6 +167,7 @@
                 "group": "Apps & Automation",
                 "pages": [
                   "api-reference/phones/open-app",
+                  "api-reference/phones/open-url",
                   "api-reference/phones/shortcut",
                   "api-reference/phones/copy-text",
                   "api-reference/phones/read-clipboard"
@@ -175,7 +177,7 @@
           }
         ]
       },
-{
+      {
         "tab": "SDK",
         "groups": [
           {
