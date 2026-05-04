@@ -26,7 +26,8 @@
             "pages": [
               "setup/mac-app",
               "setup/phone",
-              "setup/switch-control"
+              "setup/switch-control",
+              "setup/shortcuts"
             ]
           },
           {
@@ -155,6 +156,7 @@
                 "pages": [
                   "api-reference/phones/screenshot",
                   "api-reference/phones/open-app",
+                  "api-reference/phones/open-url",
                   "api-reference/phones/shortcut",
                   "api-reference/phones/home",
                   "api-reference/phones/escape",
