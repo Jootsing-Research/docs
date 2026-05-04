@@ -1,0 +1,69 @@
+---
+title: Read Clipboard
+description: Read text from the phone's clipboard
+api: POST /v1/phones/{phone_id}/read-clipboard
+---
+
+Read the current text value from a phone's clipboard using the installed TapKit iOS Shortcut.
+
+## Request
+
+```bash
+curl -X POST https://api.tapkit.ai/v1/phones/{phone_id}/read-clipboard \
+  -H "X-API-Key: joot_your_api_key"
+```
+
+No request body required.
+
+### Path Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `phone_id` | `string` | The phone identifier |
+
+### Query Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `async` | `boolean` | `false` | Return immediately with job ID |
+
+## Synchronous Response
+
+Returns the clipboard text directly when `async=false` or omitted:
+
+```json
+{
+  "text": "https://www.instagram.com/p/example/",
+  "empty": false,
+  "job_id": "job_abc123"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `text` | `string` | Clipboard text returned by the phone |
+| `empty` | `boolean` | Whether the returned text is empty |
+| `job_id` | `string` | Job that tracked the clipboard read |
+
+## Asynchronous Response
+
+When `?async=true`:
+
+```json
+{
+  "job_id": "job_abc123"
+}
+```
+
+Poll `GET /v1/jobs/{job_id}` for completion. The completed job result contains `text` and `empty`.
+
+## Notes
+
+- Reads text clipboard content only.
+- Requires the TapKit iOS Shortcut to be installed and updated.
+- The returned clipboard text is stored in the job result.
+
+## Related Endpoints
+
+- [Copy Text](/api-reference/phones/copy-text) - Copy text to the phone clipboard
+- [Run Shortcut](/api-reference/phones/shortcut) - Execute an iOS Shortcut

@@ -1,10 +1,10 @@
 ---
 title: Open App
-description: Open an app by name via Spotlight search
+description: Open an app by name
 api: POST /v1/phones/{phone_id}/open-app
 ---
 
-Open an app by name. Uses Spotlight search to find and launch the app.
+Open an app by name. TapKit resolves the requested app against the Mac app's installed app list and launches it on the phone.
 
 ## Request
 

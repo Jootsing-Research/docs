@@ -121,12 +121,6 @@
                 ]
               },
               {
-                "group": "Status",
-                "pages": [
-                  "api-reference/status/get-status"
-                ]
-              },
-              {
                 "group": "Devices",
                 "pages": [
                   "api-reference/phones/list-phones",
@@ -134,8 +128,14 @@
                   "api-reference/phones/get-status",
                   "api-reference/phones/get-settings",
                   "api-reference/phones/update-settings",
-                  "api-reference/phones/select-phone",
-                  "api-reference/phones/copy-text"
+                  "api-reference/phones/select-phone"
+                ]
+              },
+              {
+                "group": "Inspection",
+                "pages": [
+                  "api-reference/phones/screenshot",
+                  "api-reference/phones/get-apps"
                 ]
               },
               {
@@ -151,20 +151,24 @@
                 ]
               },
               {
-                "group": "Actions",
+                "group": "Device Commands",
                 "pages": [
-                  "api-reference/phones/screenshot",
-                  "api-reference/phones/open-app",
-                  "api-reference/phones/shortcut",
                   "api-reference/phones/home",
                   "api-reference/phones/escape",
                   "api-reference/phones/lock",
                   "api-reference/phones/unlock",
                   "api-reference/phones/spotlight",
-                  "api-reference/phones/siri",
                   "api-reference/phones/app-switcher",
-                  "api-reference/phones/control-center",
-                  "api-reference/phones/action-button"
+                  "api-reference/phones/control-center"
+                ]
+              },
+              {
+                "group": "Apps & Automation",
+                "pages": [
+                  "api-reference/phones/open-app",
+                  "api-reference/phones/shortcut",
+                  "api-reference/phones/copy-text",
+                  "api-reference/phones/read-clipboard"
                 ]
               }
             ]

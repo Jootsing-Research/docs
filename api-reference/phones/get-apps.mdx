@@ -1,0 +1,60 @@
+---
+title: Get Apps
+description: List apps available on a connected phone
+api: GET /v1/phones/{phone_id}/apps
+---
+
+Get the cached app list for a connected phone. If the app list is not cached, the Mac app refreshes it from the phone before returning the response.
+
+Use this as an inspection endpoint: it reads what the Mac app knows about the connected phone without launching or changing apps.
+
+## Request
+
+```bash
+curl https://api.tapkit.ai/v1/phones/{phone_id}/apps \
+  -H "X-API-Key: joot_your_api_key"
+```
+
+### Path Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `phone_id` | `string` | The phone identifier |
+
+## Response
+
+Returns JSON describing the apps available on the phone. The app list is intended for app discovery and for resolving app names before calling [Open App](/api-reference/phones/open-app).
+
+```json
+[
+  {
+    "name": "Settings",
+    "bundle_id": "com.apple.Preferences"
+  },
+  {
+    "name": "Safari",
+    "bundle_id": "com.apple.mobilesafari"
+  }
+]
+```
+
+## Example
+
+```python
+import requests
+
+response = requests.get(
+    f"https://api.tapkit.ai/v1/phones/{phone_id}/apps",
+    headers={"X-API-Key": "joot_..."}
+)
+
+apps = response.json()
+for app in apps:
+    print(app)
+```
+
+## Related Endpoints
+
+- [Screenshot](/api-reference/phones/screenshot) - Capture the current screen
+- [Open App](/api-reference/phones/open-app) - Launch an app by name
+- [Get Phone Status](/api-reference/phones/get-status) - Check whether the phone is online

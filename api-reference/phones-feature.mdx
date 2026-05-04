@@ -3,17 +3,37 @@ title: Phones
 description: Control and manage phones via the API
 ---
 
-Phones are the physical iPhones connected to your TapKit account through the Mac app. The API lets you list available phones, get device information, and perform actions on them.
+Phones are the physical iPhones connected to your TapKit account through the Mac app. The API lets you list available phones, inspect what the Mac app can see from a connected phone, and send control commands to that phone.
 
 ## How phones work in the API
 
-Every phone connected through the TapKit Mac app becomes available via the API. Each phone has a unique `phone_id` that you use to target actions.
+Every phone connected through the TapKit Mac app becomes available via the API. Each phone has a unique `phone_id` that you use to target phone-specific endpoints.
 
 If you only have one phone connected, most endpoints auto-select it — you don't need to specify a `phone_id`.
 
-## Available actions
+## Endpoint categories
 
-You can perform these actions on a connected phone:
+Phone endpoints are grouped by what they do:
+
+### Device management
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /phones` | List all connected phones |
+| `GET /phones/{id}/info` | Get phone info, including screen size |
+| `GET /phones/{id}/status` | Get live connection and control status |
+| `GET /phones/{id}/settings` | Get phone settings |
+| `PATCH /phones/{id}/settings` | Update phone settings |
+| `POST /phones/{id}/select` | Switch the active phone on the Mac |
+
+### Inspection
+
+Inspection endpoints read state or data from the connected phone through the Mac app. They do not press buttons, launch apps, or send touch input.
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /phones/{id}/screenshot` | Capture the current screen |
+| `GET /phones/{id}/apps` | List apps available on the phone |
 
 ### Touch gestures
 
@@ -27,7 +47,7 @@ You can perform these actions on a connected phone:
 | Hold and drag | `POST /phones/{id}/hold-and-drag` | Long press then drag |
 | Pinch | `POST /phones/{id}/pinch` | Pinch to zoom in/out |
 
-### Device control
+### Device commands
 
 | Action | Endpoint | Description |
 |--------|----------|-------------|
@@ -35,15 +55,17 @@ You can perform these actions on a connected phone:
 | Lock | `POST /phones/{id}/lock` | Lock the device |
 | Unlock | `POST /phones/{id}/unlock` | Unlock the device |
 | Spotlight | `POST /phones/{id}/spotlight` | Open Spotlight search |
-| Siri | `POST /phones/{id}/siri` | Activate Siri |
+| App switcher | `POST /phones/{id}/app-switcher` | Open the app switcher |
+| Control Center | `POST /phones/{id}/control-center` | Open Control Center |
 
-### App control
+### Apps and automation
 
 | Action | Endpoint | Description |
 |--------|----------|-------------|
 | Open app | `POST /phones/{id}/open-app` | Open any app by name or bundle ID |
-| Screenshot | `GET /phones/{id}/screenshot` | Capture the current screen |
 | Run shortcut | `POST /phones/{id}/shortcut` | Run an iOS Shortcut |
+| Copy text | `POST /phones/{id}/copy-text` | Copy text to the phone clipboard |
+| Read clipboard | `POST /phones/{id}/read-clipboard` | Read text from the phone clipboard |
 
 ## Coordinate system
 
@@ -56,15 +78,3 @@ For example, if a screenshot shows a button at position (300, 672), you send `{"
 Many touch actions also support a **selector** variant (e.g., `tap-select`, `drag-select`) that lets you target elements by description rather than coordinates. This is useful when you know what you want to tap but not exactly where it is.
 
 See the individual endpoint pages for details on selector parameters.
-
-## Device management
-
-| Endpoint | Description |
-|----------|-------------|
-| `GET /phones` | List all connected phones |
-| `GET /phones/{id}/info` | Get phone info (name, screen size) |
-| `GET /phones/{id}/status` | Get phone status (connection, Switch Control, streaming) |
-| `GET /phones/{id}/settings` | Get phone settings |
-| `PATCH /phones/{id}/settings` | Update phone settings |
-| `GET /phones/{id}/apps` | List installed apps |
-| `POST /phones/{id}/copy-text` | Copy text to phone clipboard |

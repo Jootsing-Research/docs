@@ -6,6 +6,8 @@ api: GET /v1/phones/{phone_id}/screenshot
 
 Capture a screenshot from the phone's current screen.
 
+This is an inspection endpoint: the Mac app reads the current phone screen and returns image data. It does not send input to the phone or change phone state.
+
 ## Request
 
 ```bash

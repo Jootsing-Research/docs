@@ -65,9 +65,21 @@ Errors return a consistent format:
 | `SCREENSHOT_FAILED` | 500 | Screenshot capture failed |
 | `EMPTY_BODY` | 400 | Required request body missing |
 
+## Endpoint categories
+
+Phone endpoints fall into a few different categories. Use **Inspection** for endpoints that ask the Mac app to report something from the connected phone, such as a screenshot or installed app list.
+
+| Category | Purpose | Examples |
+|----------|---------|----------|
+| Devices | Register, select, and configure connected phones | `GET /phones`, `GET /phones/{id}/status` |
+| Inspection | Read state or data from the connected phone through the Mac app | `GET /phones/{id}/screenshot`, `GET /phones/{id}/apps` |
+| Gestures | Send touch input to the phone | `POST /phones/{id}/tap`, `POST /phones/{id}/drag` |
+| Device commands | Press system controls or open system surfaces | `POST /phones/{id}/home`, `POST /phones/{id}/lock` |
+| Apps & automation | Launch apps, run shortcuts, or exchange clipboard text with the phone | `POST /phones/{id}/open-app`, `POST /phones/{id}/copy-text` |
+
 ## Sync vs async mode
 
-Most action endpoints support both synchronous and asynchronous execution.
+Most state-changing endpoints support both synchronous and asynchronous execution. Inspection endpoints may return data directly, such as PNG image bytes for screenshots.
 
 ### Synchronous (default)
 
@@ -121,7 +133,13 @@ Poll `GET /v1/jobs/{job_id}` to check status.
   <Card title="Devices" icon="list" href="/api-reference/phones/list-phones">
     List and manage connected phones.
   </Card>
-  <Card title="Actions" icon="hand-pointer" href="/api-reference/phones/tap">
-    Explore touch gestures, screenshots, and device control.
+  <Card title="Inspection" icon="eye" href="/api-reference/phones/screenshot">
+    Read screenshots, app lists, and live phone state.
+  </Card>
+  <Card title="Gestures" icon="hand-pointer" href="/api-reference/phones/tap">
+    Send touch input to the phone.
+  </Card>
+  <Card title="Device Commands" icon="mobile-button" href="/api-reference/phones/home">
+    Press Home, lock, unlock, and open system surfaces.
   </Card>
 </CardGroup>
