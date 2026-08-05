@@ -3,98 +3,47 @@ title: Mac App
 description: The host app that makes your phones available
 ---
 
-The TapKit Mac app is the host that connects physical iPhones to your TapKit account, making them available to any integration — Claude, Codex, the API, or any MCP client. No Mac app running, no phone access.
+The TapKit Mac app connects physical iPhones to your TapKit account and makes them available to Claude, Codex, the API, and other supported clients. The app must be running for TapKit to see or control a hosted phone.
 
-<Frame>
-  <img src="/images/mac-app-overview.png" alt="TapKit Mac app showing connected iPhone with gestures panel and agent sessions" />
-</Frame>
+## Connected phones
 
-## Sidebar (left)
+The main workspace shows the iPhones available from this Mac. Select a phone to view its live screen and connection state.
 
-### Status bar
+Keep each hosted iPhone connected over USB. The phone must also be paired with the Mac over Bluetooth during setup. If a phone is locked or disconnected, the app shows that it is not ready so you can reconnect or unlock it.
 
-Five indicators at the top of the sidebar show system status at a glance. Green means connected, yellow means connecting, and red means disconnected or off.
+## Gestures & device controls
 
-<Accordion title="See screenshot">
-  <Frame>
-    <img src="/images/mac-app-status-bar.png" alt="Status bar showing Switch, Server, Phone, Screen, and Stream indicators" style={{ borderRadius: '12px' }} />
-  </Frame>
-</Accordion>
+You can send common touch gestures and device commands from the Mac app. These manual controls are useful for testing the connection, positioning the phone before a task, or intervening while a task is running.
 
-| Indicator | What it means |
-|-----------|---------------|
-| **Switch** | Whether Switch Control is connected and running. Red = off, yellow = connecting, green = on. |
-| **Server** | Whether you have a live connection to the TapKit server. Green = logged in and connected. Red = signed out or connection issues. |
-| **Phone** | Whether your iPhone is detected as connected. |
-| **Screen** | Whether the Mac is receiving the screen stream from your phone. Red if the phone is locked or something is interrupting the stream. |
-| **Stream** | Whether someone else on your team is viewing the live stream on the web app. Green = someone is watching, red = no active viewers. |
+Actions appear on the live phone screen as they happen, so you can follow the task in real time.
 
-### Gestures & Device Controls
+## Agent chat
 
-Below the device list, you can switch between **Gestures** and **Device** tabs. Gestures shows touch gestures (tap, swipe, pinch, etc.) and Device shows device controls (home, lock, volume, etc.). You can trigger these manually by clicking them — useful for testing or quick one-off actions.
+The built-in agent chat is the fastest way to try TapKit without configuring another client. Enter a natural-language task, such as:
 
-<Accordion title="See screenshots">
-  <Frame>
-    <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', alignItems: 'flex-start', padding: '16px' }}>
-      <img src="/images/mac-app-gestures-menu.png" alt="Gestures tab showing tap, double tap, flick, pan, drag, and pinch" style={{ width: '268px', height: '314px', borderRadius: '12px' }} />
-      <img src="/images/mac-app-device-menu.png" alt="Device tab showing home, lock, siri, spotlight, volume, and more" style={{ width: '271px', height: '370px', borderRadius: '12px' }} />
-    </div>
-  </Frame>
-</Accordion>
+> Open Settings and turn on Dark Mode
 
-### Switch Control
+The agent observes the phone screen, performs actions, and continues until the task is complete or needs your input.
 
-At the bottom left, the Switch Control section shows the connection status. When off, you can turn it on or open the Switch Control menu. When on, you get three buttons for interacting with Apple's Switch Control directly — **Next** iterates through items, **Select** selects the current item, and **Stop** stops scanning. These are there as a convenience in case Switch Control gets stuck or you want to control it manually.
+## Connection status
 
-<Accordion title="See screenshots">
-  <Frame>
-    <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', alignItems: 'flex-start', padding: '16px' }}>
-      <img src="/images/mac-app-menu-off.png" alt="Switch Control off with Turn On and Open Menu buttons" style={{ width: '262px', height: '106px', borderRadius: '12px' }} />
-      <img src="/images/mac-app-menu-on.png" alt="Switch Control on with Next, Select, Stop buttons and Turn Off" style={{ width: '246px', height: '158px', borderRadius: '12px' }} />
-    </div>
-  </Frame>
-</Accordion>
+The app reports whether it can reach the TapKit service, detect the selected iPhone, and receive the phone's screen. When a phone is not ready:
 
-## Phone view (center)
+1. Make sure TapKit is open and signed in.
+2. Connect the iPhone over USB and unlock it.
+3. Select the phone in the Mac app.
+4. Confirm the iPhone is paired with the Mac under **Settings > Bluetooth**.
 
-The center panel shows a live feed of the selected phone's screen. During an active task, you'll see the agent's actions happen in real-time — taps, swipes, typing, and navigation.
-
-The screen updates continuously so you always know what the agent is doing and can intervene if needed.
-
-## Agent chat (right)
-
-The right panel is a built-in agent interface. Type a natural language prompt — like "Open Settings and turn on Dark Mode" — and the agent will execute it on the phone. This is the fastest way to test TapKit without setting up any external integrations.
+See [Mac App Setup](/setup/mac-app) for the complete connection flow.
 
 ## Settings
 
-The settings window has four tabs: General, Phones, Account, and Script Logs.
+Use the Mac app's settings to manage:
 
-<AccordionGroup>
-  <Accordion title="General">
-    View the status of your macOS permissions (Accessibility, Camera, Automation) and grant any that are missing. **Run Setup Again** takes you back to the beginning of the setup flow if you need to reconfigure or set up a new phone. **Show Advanced Settings** enables verbose AppleScript output and the Script Logs tab for troubleshooting.
+- **Setup and permissions:** Review Camera and Bluetooth access or run the guided setup again.
+- **Phones:** Add and select hosted phones, and optionally save a passcode for unlocking. Saved passcodes remain in the Mac's local Keychain and are not uploaded to TapKit.
+- **Account:** Review your sign-in state, sign out, and open subscription or billing management.
 
-    <Frame>
-      <img src="/images/mac-app-settings-general.png" alt="General settings showing permissions, setup, and advanced options" />
-    </Frame>
-  </Accordion>
-
-  <Accordion title="Phones">
-    Switch between multiple connected phones, set the active phone, and configure passcodes. Your phone's passcode is used to unlock it — TapKit stores it locally in your Mac's keychain and never uploads it to the server.
-
-    <Frame>
-      <img src="/images/mac-app-settings-phones.png" alt="Phones settings showing active phone, connected phones, and passcode configuration" />
-    </Frame>
-  </Accordion>
-
-  <Accordion title="Account">
-    View your sign-in status, sign out, and manage your subscription and billing.
-
-    <Frame>
-      <img src="/images/mac-app-settings-account.png" alt="Account settings showing sign-in status, billing, and manage subscription" />
-    </Frame>
-  </Accordion>
-
-  <Accordion title="Script Logs">
-    View verbose AppleScript logs for troubleshooting. Only visible when **Show Advanced Settings** is enabled in the General tab.
-  </Accordion>
-</AccordionGroup>
+<Note>
+  The available settings may vary by app version and account plan.
+</Note>

@@ -1,24 +1,17 @@
 ---
 title: Claude
-description: Control iPhones from Claude.ai, Co-work, and Claude Code
+description: Control iPhones from Claude Chat, Cowork, and Claude Code
 ---
 
-TapKit works natively with Claude through MCP (Model Context Protocol). Use it directly in Claude.ai and Co-work with zero code, or install the Claude Code plugin for terminal workflows.
+TapKit works natively with Claude through MCP (Model Context Protocol). Use the Claude app plugin in Chat and Cowork, or install the separate Claude Code plugin for terminal workflows.
 
-## Claude.ai and Co-work
+## Claude app
 
-TapKit connects as an MCP server in Claude.ai, giving Claude direct access to your iPhone.
+Install the TapKit plugin in the Claude app to use it from Chat and Cowork. The plugin adds the TapKit connector and its phone-control tools.
 
-### Setup
-
-1. Open [Claude.ai](https://claude.ai) and go to **Settings**
-2. Navigate to the **Integrations** or **MCP** section
-3. Add TapKit as a new MCP connection
-4. Authenticate with your TapKit account when prompted
-
-{/* TODO: Screenshot/GIF of MCP connector in Claude.ai settings */}
-
-Once connected, you can chat with Claude and ask it to control your phone directly. Co-work uses the same MCP connection — TapKit is automatically available there too.
+<Card title="Set up the Claude app" icon="message" href="/integrations/claude-app">
+  Install the plugin, connect TapKit, and grant tool permissions.
+</Card>
 
 ### Example prompts
 
@@ -31,72 +24,37 @@ Try these to get started:
 
 ## Claude Code
 
-The TapKit plugin for Claude Code gives Claude iPhone control in your terminal. It installs an MCP server connection and a skill file that teaches Claude how to use the tools effectively.
+The TapKit plugin for Claude Code gives Claude iPhone control in your terminal. It installs an MCP server connection and TapKit skills that teach Claude how to use the tools and navigate supported apps.
 
-### Setup
-
-**1. Add the plugin marketplace:**
-
-```
-/plugin marketplace add jootsing-research/jootsing-plugins
-```
-
-**2. Install the plugin:**
-
-```
-/plugin install tapkit@jootsing-plugins
-```
-
-**3. Restart Claude Code** — quit and reopen so the MCP server and skill file load.
-
-**4. Authenticate** — run `/mcp` inside Claude Code. Select TapKit and choose **Authenticate**. Your browser will open to sign in.
-
-<Note>
-  If your browser doesn't open automatically, copy the URL from Claude Code and paste it manually. If the browser redirect fails after signing in, paste the full callback URL from your browser's address bar back into Claude Code.
-</Note>
-
-**5. Verify it works:**
-
-```
-Take a screenshot of my phone
-```
-
-If a phone is connected via the Mac app, you'll see the screenshot.
-
-### Links
-
-- [Plugin marketplace](https://github.com/Jootsing-Research/jootsing-plugins)
-- [API Reference](/api-reference/introduction)
+<Card title="Set up Claude Code" icon="terminal" href="/integrations/claude-code">
+  Install the current plugin, authenticate, and verify the connection.
+</Card>
 
 ## Available actions
 
-Every action is available through both Claude.ai and Claude Code:
+The same phone-control actions are available in Claude Chat, Cowork, and Claude Code:
 
 | Action | Description |
 |--------|-------------|
+| `list_phones` | List available phones |
+| `screenshot` | Capture the current phone screen |
 | `tap` | Single tap at screen coordinates |
-| `double_tap` | Double tap for zoom or text selection |
-| `long_press` | Tap and hold for context menus |
-| `swipe` | Fast flick gesture in any direction |
-| `drag` | Drag between two points (sliders, scrolling) |
-| `hold_and_drag` | Long press then drag (reordering) |
-| `screenshot` | Capture the current screen |
-| `open_app` | Open any app by name |
-| `copy_text_to_phone` | Copy text to the phone's clipboard |
+| `type_text` | Type text into the focused field |
 | `press_home` | Go to home screen |
-| `escape` | Dismiss keyboards, alerts, or go back |
-| `lock` / `unlock` | Lock or unlock the device |
-| `volume_up` / `volume_down` | Volume controls |
-| `spotlight` | Open Spotlight search |
-| `activate_siri` | Trigger Siri |
-| `get_phone_info` | Get screen dimensions and device name |
-| `get_phone_status` | Get connection and Switch Control status |
-| `list_phones` | List connected phones |
-| `select_phone` | Select a specific phone (multi-phone setups) |
-| `run_shortcut` | Run an iOS Shortcut by index |
-| `enable_switch_control` | Enable Switch Control on the phone |
+| `swipe` | Swipe up, down, left, or right |
+| `drag` | Drag between two points |
+| `hold_and_drag` | Long press, then drag between two points |
+| `double_tap` | Double tap at screen coordinates |
+| `long_press` | Press and hold at screen coordinates |
+| `lock` | Lock the phone |
+| `unlock` | Unlock the phone |
+| `get_phone_status` | Get connection and device status |
 
-For the full API details, see the [API Reference](/api-reference/introduction).
+<Note>
+  `list_phones` does not require a phone ID. Call it first, then pass the returned `phone_id` to every tool that targets a specific phone.
+</Note>
+
+For connection details and tool signatures, see the [MCP guide](/integrations/mcp).
 
 ## Troubleshooting
 
@@ -106,7 +64,7 @@ For the full API details, see the [API Reference](/api-reference/introduction).
   </Accordion>
 
   <Accordion title="Actions are timing out">
-    Check that your phone is awake and the screen is on. Switch Control must be enabled on the iPhone. If the Mac app shows the phone as disconnected, unplug and replug the USB cable.
+    Check that your phone is awake, unlocked, and still connected. If the Mac app shows the phone as disconnected, unplug and reconnect the USB cable.
   </Accordion>
 
   <Accordion title="Phone not showing up in available devices">

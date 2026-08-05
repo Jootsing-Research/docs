@@ -24,10 +24,7 @@
           {
             "group": "Setup",
             "pages": [
-              "setup/mac-app",
-              "setup/phone",
-              "setup/switch-control",
-              "setup/shortcuts"
+              "setup/mac-app"
             ]
           },
           {
@@ -82,7 +79,6 @@
             "group": "Everywhere Else",
             "pages": [
               "integrations/mcp",
-              "integrations/cli",
               "integrations/skills"
             ]
           }
@@ -127,9 +123,7 @@
                   "api-reference/phones/list-phones",
                   "api-reference/phones/get-info",
                   "api-reference/phones/get-status",
-                  "api-reference/phones/get-settings",
-                  "api-reference/phones/update-settings",
-                  "api-reference/phones/select-phone"
+                  "api-reference/phones/update-settings"
                 ]
               },
               {
@@ -164,13 +158,9 @@
                 ]
               },
               {
-                "group": "Apps & Automation",
+                "group": "Apps",
                 "pages": [
-                  "api-reference/phones/open-app",
-                  "api-reference/phones/open-url",
-                  "api-reference/phones/shortcut",
-                  "api-reference/phones/copy-text",
-                  "api-reference/phones/read-clipboard"
+                  "api-reference/phones/open-app"
                 ]
               }
             ]
@@ -193,7 +183,6 @@
             "pages": [
               "sdk/gestures",
               "sdk/typing",
-              "sdk/settings",
               "sdk/device",
               "sdk/apps",
               "sdk/screenshots",
@@ -254,5 +243,63 @@
   },
   "api": {
     "baseUrl": "https://api.tapkit.ai"
-  }
+  },
+  "redirects": [
+    {
+      "source": "/setup/claude-code",
+      "destination": "/integrations/claude-code"
+    },
+    {
+      "source": "/setup/switch-control",
+      "destination": "/setup/mac-app"
+    },
+    {
+      "source": "/setup/shortcuts",
+      "destination": "/setup/mac-app"
+    },
+    {
+      "source": "/setup/phone",
+      "destination": "/setup/mac-app"
+    },
+    {
+      "source": "/cli/:slug*",
+      "destination": "/integrations/overview"
+    },
+    {
+      "source": "/integrations/cli",
+      "destination": "/integrations/mcp"
+    },
+    {
+      "source": "/integrations/openclaw",
+      "destination": "/integrations/overview"
+    },
+    {
+      "source": "/api-reference/phones/shortcut",
+      "destination": "/api-reference/phones-feature"
+    },
+    {
+      "source": "/api-reference/phones/copy-text",
+      "destination": "/api-reference/phones-feature"
+    },
+    {
+      "source": "/api-reference/phones/read-clipboard",
+      "destination": "/api-reference/phones-feature"
+    },
+    {
+      "source": "/api-reference/phones/open-url",
+      "destination": "/api-reference/phones-feature"
+    },
+    {
+      "source": "/api-reference/phones/get-settings",
+      "destination": "/api-reference/phones/update-settings"
+    },
+    {
+      "source": "/api-reference/phones/select-phone",
+      "destination": "/api-reference/phones/list-phones"
+    },
+    {
+      "source": "/sdk/settings",
+      "destination": "/sdk/phones"
+    }
+  ]
 }

@@ -75,7 +75,7 @@ Phone endpoints fall into a few different categories. Use **Inspection** for end
 | Inspection | Read state or data from the connected phone through the Mac app | `GET /phones/{id}/screenshot`, `GET /phones/{id}/apps` |
 | Gestures | Send touch input to the phone | `POST /phones/{id}/tap`, `POST /phones/{id}/drag` |
 | Device commands | Press system controls or open system surfaces | `POST /phones/{id}/home`, `POST /phones/{id}/lock` |
-| Apps & automation | Launch apps, run shortcuts, or exchange clipboard text with the phone | `POST /phones/{id}/open-app`, `POST /phones/{id}/copy-text` |
+| Apps | Launch installed apps | `POST /phones/{id}/open-app` |
 
 ## Sync vs async mode
 

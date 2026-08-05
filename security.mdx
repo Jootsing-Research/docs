@@ -3,38 +3,24 @@ title: Security & Privacy
 description: How TapKit handles your devices and data
 ---
 
-TapKit is designed to give you full control over real iPhones while being transparent about how everything works. This page covers the architecture, permissions, data handling, and security model.
+TapKit is designed to give you control over real iPhones while being transparent about how everything works. This page covers the architecture, permissions, data handling, and security model.
 
 ## How it works
 
-TapKit uses Apple's built-in accessibility features to control your iPhone:
+TapKit uses the Mac app as a local host for your iPhone:
 
-1. The **Mac app** connects to your iPhone over USB and Switch Control
-2. It **streams the phone's screen** so AI agents can see what's happening
-3. AI agents send commands (tap, swipe, type) which the Mac app **translates into Switch Control gestures**
-4. The gestures execute on the phone just like a human would perform them
+1. The **Mac app** connects to the selected iPhone over USB and a Bluetooth pairing.
+2. It **receives the phone's screen** so AI agents can see what's happening.
+3. AI agents send commands such as tap, swipe, and type to the Mac app.
+4. The Mac app executes each action on the phone and returns the updated screen.
 
-No jailbreaking. No modified iOS. No sideloaded apps. Everything runs through Apple's native accessibility APIs.
+No jailbreaking, modified iOS, developer mode, or sideloaded iPhone app is required.
 
 {/* TODO: Architecture diagram — Mac ↔ Phone ↔ TapKit servers ↔ AI provider */}
 
 ## Why we need each permission
 
-The Mac app requests three macOS permissions during setup. Here's exactly what each one does — and what it doesn't do.
-
-### Accessibility
-
-| | |
-|---|---|
-| **Used for** | Controlling Switch Control to send gestures to the phone |
-| **Not used for** | Reading your Mac screen, keylogging, or accessing other apps |
-
-### Automation
-
-| | |
-|---|---|
-| **Used for** | Configuring your macOS Shortcut |
-| **Not used for** | Automating other Mac apps or accessing your files |
+The Mac app requests two macOS permissions during setup. Here's what each one is used for.
 
 ### Camera
 
@@ -43,42 +29,22 @@ The Mac app requests three macOS permissions during setup. Here's exactly what e
 | **Used for** | Capturing the phone's screen via the screencast stream |
 | **Not used for** | Your Mac's webcam, microphone, or any other camera input |
 
-## Shortcut security
+### Bluetooth
 
-### Setup Shortcut
+| | |
+|---|---|
+| **Used for** | Pairing the selected iPhone with the host Mac and sending phone actions |
+| **Not used for** | Connecting to accessories that aren't part of your TapKit setup |
 
-During [Phone Setup](/setup/phone), the setup Shortcut changes a few Switch Control settings on your iPhone — things like setting the scanning mode to gliding cursor, adjusting cursor speed, and reordering menu items so TapKit can perform gestures. None of these affect your phone in any meaningful way outside of accessibility, and they're all irrelevant when you turn off Switch Control.
+## Local device data
 
-The shortcut is fully inspectable — you can tap the three-dot menu on it in the Shortcuts app to see exactly what it does.
-
-### Use TapKit shortcut (runtime)
-
-The runtime shortcut handles clipboard-based data transfer and automation actions during phone control. It uses:
-
-- Clipboard access for text transfer
-- Wi-Fi information for device discovery
-- Automation actions for executing commands
-
-This shortcut is also fully inspectable in the Shortcuts app.
-
-## Shortcut token
-
-The Shortcut token you paste during phone setup is a restricted API key with limited access. It:
-
-- **Can** read device status and receive commands
-- **Cannot** modify account settings
-- **Cannot** access billing or payment information
-- **Cannot** create or revoke API keys
-- **Cannot** access other phones on your account
-
-It's scoped to the specific phone it's configured for.
+If you choose to save an iPhone passcode in the Mac app, TapKit stores it locally in the macOS Keychain. The passcode is not uploaded to the TapKit server.
 
 ## Your phone's safety
 
 - **No jailbreaking** or iOS modifications required
-- Uses only **Apple's built-in accessibility APIs** (Switch Control)
 - Phone can be **disconnected at any time** — unplug the USB cable or close the Mac app
-- All changes are **reversible** — Switch Control settings can be reset, Shortcuts can be deleted
+- Bluetooth pairing can be removed from either device's Bluetooth settings
 - TapKit **cannot access** your phone when the Mac app isn't running
 
 ## Legal and compliance

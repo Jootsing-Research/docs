@@ -22,11 +22,7 @@ curl https://api.tapkit.ai/v1/phones \
     "name": "iPhone 15 Pro",
     "device_name": "iPhone 15 Pro",
     "display_name": "My Work Phone",
-    "unique_id": "00008030-001A2B3C4D5E6F",
     "phone_number": "+15551234567",
-    "shortcut_token": "st_abc123",
-    "typing_method": "shortcut",
-    "speed": 30,
     "activation_state": "active",
     "activated_at": "2024-01-10T15:00:00Z",
     "deactivated_at": null,
@@ -50,11 +46,7 @@ curl https://api.tapkit.ai/v1/phones \
 | `name` | `string` | Device model name |
 | `device_name` | `string` | Device hardware name |
 | `display_name` | `string \| null` | Custom display name (set via update-settings) |
-| `unique_id` | `string` | Hardware identifier (UDID) |
 | `phone_number` | `string \| null` | Phone number if available |
-| `shortcut_token` | `string \| null` | Token for iOS Shortcut authentication |
-| `typing_method` | `string` | Default typing method: `"keys"`, `"paste"`, `"shortcut"`, or `"shortcut_legacy"` |
-| `speed` | `number` | Switch Control scanning speed: `30` (slow) or `90` (fast) |
 | `activation_state` | `string` | `"active"` or `"inactive"` |
 | `activated_at` | `string \| null` | ISO 8601 timestamp of activation |
 | `deactivated_at` | `string \| null` | ISO 8601 timestamp of deactivation |
@@ -63,8 +55,8 @@ curl https://api.tapkit.ai/v1/phones \
 | `can_view_on_web` | `boolean` | Whether the phone screen can be viewed in the web dashboard |
 | `connection_status` | `string` | `"online"`, `"available"`, or `"offline"` |
 | `connected_mac_id` | `string \| null` | ID of the Mac this phone is connected to |
-| `width` | `integer` | Screen width in pixels |
-| `height` | `integer` | Screen height in pixels |
+| `width` | `integer \| null` | Screen width in pixels, or `null` when unavailable |
+| `height` | `integer \| null` | Screen height in pixels, or `null` when unavailable |
 | `created_at` | `string` | ISO 8601 timestamp of phone registration |
 
 ## Examples
@@ -103,4 +95,3 @@ if available:
 
 - Returns an empty array `[]` if no phones are connected
 - Phone IDs remain stable for the same physical device
-- The `unique_id` corresponds to the device's UDID

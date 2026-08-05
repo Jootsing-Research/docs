@@ -63,7 +63,6 @@ status = client.status()
 print(f"Mac app running: {status.mac_app_running}")
 print(f"Phone connected: {status.phone_connected}")
 print(f"Phone name: {status.phone_name}")
-print(f"Switch Control enabled: {status.switch_control_enabled}")
 print(f"Screen locked: {status.screen_locked}")
 print(f"Streaming: {status.streaming}")
 ```
@@ -75,7 +74,6 @@ print(f"Streaming: {status.streaming}")
 | `mac_app_running` | `bool` | Whether the Mac companion app is running |
 | `phone_connected` | `bool` | Whether a phone is connected |
 | `phone_name` | `str \| None` | Name of the connected phone |
-| `switch_control_enabled` | `bool` | Whether Switch Control is enabled |
 | `screen_locked` | `bool` | Whether the device screen is locked |
 | `streaming` | `bool` | Whether screen streaming is active |
 

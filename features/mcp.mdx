@@ -11,14 +11,7 @@ The MCP server runs as a hosted endpoint. You don't need to run anything locally
 
 <Tabs>
   <Tab title="Claude Code">
-    See the full [Claude Code setup guide](/setup/claude-code) for step-by-step instructions.
-
-    ```
-    /plugin marketplace add jootsing-research/jootsing-plugins
-    /plugin install tapkit@jootsing-plugins
-    ```
-
-    This installs the MCP server connection and a skill file that teaches Claude how to use the tools effectively.
+    See the current [Claude Code setup guide](/integrations/claude-code) for step-by-step instructions. The TapKit plugin installs the MCP server connection and TapKit skills that teach Claude how to use the tools and navigate supported apps.
   </Tab>
   <Tab title="Claude Desktop / Other MCP Clients">
     Add to your MCP config:
@@ -38,55 +31,33 @@ The MCP server runs as a hosted endpoint. You don't need to run anything locally
 
 ## Tools
 
-### Navigation
+Call `list_phones` first to discover available phones. Every other tool requires a `phone_id` returned by `list_phones`.
 
 | Tool | Description |
 |------|-------------|
-| `open_app(app_name)` | Open any app by name (e.g. "Settings", "Safari") or bundle ID |
-| `press_home` | Go to home screen |
-| `escape` | Dismiss keyboards, alerts, popups, or go back |
-| `spotlight(query?)` | Open Spotlight search, optionally type a query |
-
-### Touch Gestures
-
-| Tool | Description |
-|------|-------------|
-| `tap(x, y)` | Single tap at coordinates |
-| `double_tap(x, y)` | Double tap (zoom, text selection) |
-| `long_press(x, y, duration?)` | Tap and hold for context menus. Default 1000ms |
-| `swipe(x, y, direction)` | Fast flick gesture — up, down, left, or right |
-| `drag(from_x, from_y, to_x, to_y)` | Drag between two points (sliders, precise scrolling) |
-| `hold_and_drag(from_x, from_y, to_x, to_y)` | Long press then drag (reordering, drag-and-drop) |
-
-### Input
-
-| Tool | Description |
-|------|-------------|
-| `copy_text_to_phone(text)` | Copy text to the phone's clipboard |
-| `activate_siri` | Trigger Siri |
-
-### Device
-
-| Tool | Description |
-|------|-------------|
-| `screenshot` | Capture the current screen as an image |
-| `get_phone_info` | Get screen dimensions and device name |
-| `get_phone_status` | Get connection status, Switch Control state, and screen lock state |
-| `list_phones` | List all connected phones |
-| `select_phone(phone_id)` | Select which phone to control (multi-phone setups) |
-| `lock` / `unlock` | Lock or unlock the device |
-| `volume_up` / `volume_down` | Volume controls |
-| `run_shortcut(index)` | Run an iOS Shortcut by index |
-| `enable_switch_control` | Enable Switch Control on the phone |
+| `list_phones` | List available phones |
+| `screenshot(phone_id)` | Capture the current phone screen as an image |
+| `tap(phone_id, x, y)` | Single tap at coordinates |
+| `type_text(phone_id, text)` | Type text into the focused field |
+| `press_home(phone_id)` | Go to the home screen |
+| `swipe(phone_id, x, y, direction)` | Swipe up, down, left, or right |
+| `drag(phone_id, from_x, from_y, to_x, to_y)` | Drag between two points |
+| `hold_and_drag(phone_id, from_x, from_y, to_x, to_y, hold_duration_ms?)` | Long press, then drag between two points |
+| `double_tap(phone_id, x, y)` | Double tap at coordinates |
+| `long_press(phone_id, x, y, duration?)` | Press and hold at coordinates |
+| `lock(phone_id)` | Lock the phone |
+| `unlock(phone_id)` | Unlock the phone |
+| `get_phone_status(phone_id)` | Get connection and device status |
 
 ## How It Works
 
 Claude follows a **screenshot → look → act → verify** loop:
 
-1. `screenshot` — see the current screen
-2. Visually identify UI elements and their coordinates
-3. `tap(300, 672)` — interact at the identified position
-4. `screenshot` — verify the action worked
+1. `list_phones` — choose a phone and save its `phone_id`
+2. `screenshot(phone_id)` — see the current screen
+3. Visually identify UI elements and their coordinates
+4. `tap(phone_id, 300, 672)` — interact at the identified position
+5. `screenshot(phone_id)` — verify the action worked
 
 All coordinates map 1:1 with screenshot pixels. Screenshots are scaled so the longest edge is 1344px, and the MCP handles native-to-scaled coordinate conversion transparently.
 
@@ -102,6 +73,6 @@ Ask Claude naturally:
 
 ## Notes
 
-- **Auto phone selection** — if only one phone is connected, it's selected automatically. No need to call `list_phones` first.
-- **Multi-phone** — every tool accepts an optional `phone_id` for setups with multiple phones.
-- **Clipboard workflow** — use `copy_text_to_phone` to stage text on the clipboard, then tap a text field and paste.
+- **Phone discovery** — call `list_phones` first, choose a phone, and pass its `phone_id` to every other tool.
+- **Multi-phone** — use the IDs from `list_phones` to target the correct phone on each call.
+- **Text input** — focus a text field, then use `type_text` to enter text.

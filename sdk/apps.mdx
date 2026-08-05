@@ -1,6 +1,6 @@
 ---
 title: App Control
-description: Open apps, type text, and run shortcuts
+description: Open apps and type text
 ---
 
 ## Open App
@@ -15,22 +15,8 @@ Opens an app by name using Spotlight search. Handles the full search-and-tap flo
 ## Type Text
 
 ```python
-phone.type_text("Hello world")                           # Simulate keystrokes
-phone.type_text("https://example.com", method="paste")   # Paste from clipboard
-phone.type_text("Long message here", method="shortcut")  # Uses iOS Shortcut
+phone.type_text("Hello world")
+phone.type_text("https://example.com")
 ```
 
-| Method | Description |
-|--------|-------------|
-| `"keys"` (default) | Simulates individual key presses. Works everywhere, slower for long text. |
-| `"paste"` | Uses clipboard. Fast for long text, may not work in all contexts. |
-| `"shortcut"` | Uses iOS Shortcut for clipboard. Requires [shortcut setup](/setup/shortcuts). Fast and reliable. |
-
-## Run Shortcuts
-
-```python
-phone.run_shortcut(name="My Shortcut")  # By name
-phone.run_shortcut(index=0)             # By position (0-based)
-```
-
-Shortcuts run without input parameters. For shortcuts needing input, set up data beforehand (clipboard, files) or create a wrapper shortcut.
+Types text into the currently focused field. See [Typing](/sdk/typing) for a complete example.

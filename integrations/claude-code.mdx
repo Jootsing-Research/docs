@@ -3,7 +3,7 @@ title: Claude Code (CLI)
 description: Control iPhones from Claude Code in the terminal
 ---
 
-The TapKit plugin for Claude Code gives Claude iPhone control in your terminal. It installs an MCP server connection and a skill file that teaches Claude how to use the tools effectively.
+The TapKit plugin for Claude Code gives Claude iPhone control in your terminal. It installs an MCP server connection and TapKit skills that teach Claude how to use the tools and navigate supported apps.
 
 ## Step 1: Add the TapKit plugin marketplace
 
@@ -19,7 +19,7 @@ Run this command in Claude Code:
 2. Select the **tapkit-plugins-claude** marketplace and hit enter.
 3. Go to **Browse Plugins**, hit enter.
 4. Find **tapkit**, toggle it on, and hit enter to install.
-5. Run `/reload plugins` to load the plugin.
+5. Run `/reload-plugins` to load the plugin.
 
 {/* TODO: Screenshots of the plugin marketplace navigation */}
 
@@ -37,14 +37,7 @@ Run this command in Claude Code:
 
 ## Permissions
 
-TapKit's MCP tools will prompt for approval on each call by default. To avoid this, you can run Claude Code with one of these flags:
-
-- `--enable-auto-mode` — unlocks auto mode (press `Shift+Tab` to cycle to it), which auto-approves safe tool calls
-- `--dangerously-skip-permissions` — skips all permission prompts entirely
-
-<Warning>
-  These flags reduce the safety guardrails in Claude Code. Only use them if you're comfortable with Claude executing actions without confirmation.
-</Warning>
+Claude Code asks for approval before an MCP tool's first use in the default permission mode. When prompted, you can allow the TapKit tools for future calls, or run `/permissions` and add `mcp__tapkit__*` to your allow rules. Leave the default prompts in place if you want to confirm phone actions individually.
 
 ## Verify it works
 
@@ -62,7 +55,7 @@ If a phone is connected via the Mac app, you'll see the screenshot.
   </Accordion>
 
   <Accordion title="Actions are timing out">
-    Check that your phone is awake and the screen is on. Switch Control must be enabled on the iPhone. If the Mac app shows the phone as disconnected, unplug and replug the USB cable.
+    Check that your phone is awake, unlocked, and still connected. If the Mac app shows the phone as disconnected, unplug and reconnect the USB cable.
   </Accordion>
 
   <Accordion title="Phone not showing up in available devices">

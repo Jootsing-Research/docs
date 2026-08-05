@@ -5,7 +5,7 @@ description: Install TapKit skills to teach any AI agent how to use iPhone apps
 
 If the agent you're using doesn't have an official TapKit plugin, **skills are how you bring TapKit knowledge in**. Skills are Markdown files that teach AI agents how to use apps on your phone — they follow the open [Agent Skills](https://agentskills.io) standard and work with any agent that supports them.
 
-You should always use skills alongside one of TapKit's connection methods — the [MCP server](/integrations/mcp) or the [CLI](/integrations/cli). Skills tell the agent *what to do*; the MCP server and CLI give it *the ability to do it*.
+Use skills alongside TapKit's [MCP server](/integrations/mcp). Skills tell the agent *what to do*; the MCP server gives it *the ability to do it*.
 
 ## Install skills
 
@@ -13,7 +13,7 @@ You should always use skills alongside one of TapKit's connection methods — th
 npx skills add jootsing-research/skills
 ```
 
-This installs skills into your project's `.agents/skills/` directory, where most agents automatically pick them up.
+Choose your agent when prompted, then select the core `tapkit` skill and any app skills you need.
 
 ## Available skills
 
@@ -27,22 +27,26 @@ App skills map out a specific iOS app's UI — tabs, buttons, navigation pattern
 
 | Skill | App | What it covers |
 |-------|-----|----------------|
-| `tapkit:hinge` | Hinge | Profile cards, roses, messaging, preferences |
-| `tapkit:telegram` | Telegram | Chat types, reactions, search, bots, groups |
-| `tapkit:tiktok` | TikTok | Feed, video actions, DMs, creator pages |
-| `tapkit:linkedin` | LinkedIn | Feed, networking, jobs, messaging |
-| `tapkit:uber-eats` | Uber Eats | Restaurant search, ordering, checkout, reorders |
-| `tapkit:twitter` | Twitter / X | Coming soon |
-| `tapkit:instagram` | Instagram | Coming soon |
+| `clock` | Clock | Alarms, stopwatch, timers, and world clocks |
+| `craigslist` | Craigslist | Listing search, filters, saved searches, replies, and posting drafts |
+| `facebook` | Facebook | Feed, Reels, Marketplace, groups, messaging, and stories |
+| `hinge` | Hinge | Profiles, likes, roses, messaging, and preferences |
+| `instagram` | Instagram | Feed, Reels, stories, direct messages, Explore, and profiles |
+| `linkedin` | LinkedIn | Feed, networking, jobs, reactions, and messaging |
+| `mail` | Apple Mail | Email search, composing, and drafts |
+| `reddit` | Reddit | Feeds, communities, posts, comments, voting, search, and chat |
+| `telegram` | Telegram | Chats, reactions, search, bots, groups, and channels |
+| `tiktok` | TikTok | Feed navigation, video actions, inbox, and creator pages |
+| `twitter` | Twitter / X | Feed, posts, direct messages, search, and interactions |
+| `uber-eats` | Uber Eats | Restaurant search, ordering, checkout, and reorders |
+| `weather` | Weather | Forecasts, maps, air quality, and detailed conditions |
+| `whatsapp` | WhatsApp | Chats, search, calls, statuses, and channels |
 
 Install the core skill plus whichever app skills match your use case.
 
-## Using skills with a connection method
+## Use skills with MCP
 
-Skills on their own don't give the agent access to your phone — they just teach it how apps work. You need to pair them with a connection method:
-
-- **[MCP server](/integrations/mcp)** — connect TapKit as a remote MCP server so the agent can execute taps, swipes, screenshots, and other actions
-- **[CLI](/integrations/cli)** — install the TapKit CLI and let the agent run commands directly
+Skills on their own don't give the agent access to your phone — they teach it how apps work. Connect the agent to TapKit's [MCP server](/integrations/mcp) so it can execute taps, swipes, screenshots, and other actions.
 
 You can also build your own integration on top of the [API](/api-reference/introduction).
 

@@ -1,10 +1,10 @@
 ---
 title: Update Settings
-description: Update phone settings
+description: Update a phone's display name
 api: PATCH /v1/phones/{phone_id}/settings
 ---
 
-Update settings for a phone. Supports partial updates - only include the fields you want to change.
+Set or clear the custom display name for a phone.
 
 ## Request
 
@@ -12,7 +12,7 @@ Update settings for a phone. Supports partial updates - only include the fields 
 curl -X PATCH https://api.tapkit.ai/v1/phones/{phone_id}/settings \
   -H "X-API-Key: joot_your_api_key" \
   -H "Content-Type: application/json" \
-  -d '{"typing_method": "shortcut", "speed": 90}'
+  -d '{"display_name": "QA iPhone"}'
 ```
 
 ### Path Parameters
@@ -25,16 +25,13 @@ curl -X PATCH https://api.tapkit.ai/v1/phones/{phone_id}/settings \
 
 ```json
 {
-  "typing_method": "shortcut",
-  "speed": 90
+  "display_name": "QA iPhone"
 }
 ```
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `typing_method` | `string` | No | Typing method: `"keys"`, `"paste"`, `"shortcut"`, or `"shortcut_legacy"` |
-| `speed` | `number` | No | Switch control scanning speed: `30` (slow) or `90` (fast) |
-| `display_name` | `string` | No | Custom display name for the phone |
+| `display_name` | `string \| null` | No | Custom display name, or `null` to clear it |
 
 ## Response
 
@@ -42,22 +39,13 @@ Returns the full phone object with updated settings. See [List Phones](/api-refe
 
 ## Examples
 
-### Update Typing Method Only
+### Clear the Display Name
 
 ```bash
 curl -X PATCH https://api.tapkit.ai/v1/phones/{phone_id}/settings \
   -H "X-API-Key: joot_your_api_key" \
   -H "Content-Type: application/json" \
-  -d '{"typing_method": "shortcut"}'
-```
-
-### Update Speed Only
-
-```bash
-curl -X PATCH https://api.tapkit.ai/v1/phones/{phone_id}/settings \
-  -H "X-API-Key: joot_your_api_key" \
-  -H "Content-Type: application/json" \
-  -d '{"speed": 30}'
+  -d '{"display_name": null}'
 ```
 
 ### Python
@@ -71,32 +59,13 @@ response = requests.patch(
         "X-API-Key": "joot_...",
         "Content-Type": "application/json"
     },
-    json={"typing_method": "shortcut", "speed": 90}
+    json={"display_name": "QA iPhone"}
 )
 phone = response.json()
-print(f"Updated settings: {phone['typing_method']}, speed {phone['speed']}")
-```
-
-### SDK
-
-```python
-from tapkit import TapKitClient
-
-client = TapKitClient(api_key="joot_...")
-phone = client.get_phone("phone_id")
-
-# Update just typing method
-phone.update_settings(typing_method="shortcut")
-
-# Update just speed
-phone.update_settings(speed=90)
-
-# Update both
-phone.update_settings(typing_method="shortcut", speed=90)
+print(f"Updated display name: {phone['display_name']}")
 ```
 
 ## Notes
 
-- Partial updates are supported - omit fields you don't want to change
-- See [Phone Settings](/sdk/settings) for detailed explanations of each setting
-- See [Typing](/sdk/typing) for information about typing methods
+- Set `display_name` to `null` to use the phone's default name.
+- The display name appears in [List Phones](/api-reference/phones/list-phones).

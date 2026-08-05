@@ -9,7 +9,7 @@ TapKit has three pieces that work together: your **iPhone**, the **Mac app**, an
 
 ### The Mac app is the host
 
-The Mac app runs on a Mac that's physically connected to your iPhone via USB and on the same Wi-Fi network. It uses Apple's built-in Switch Control accessibility feature to see the phone's screen and send taps, swipes, and keystrokes — the same way a human would interact with it. The Mac is the only thing that talks directly to the phone.
+The Mac app runs on a Mac that's physically connected to your iPhone via USB. It receives the phone's screen and sends taps, swipes, text, and device commands through the paired phone connection. The Mac is the only TapKit component that talks directly to the phone.
 
 ### The server connects everything
 
@@ -21,8 +21,8 @@ Any tool that can make HTTP requests or connect to an MCP server can control the
 
 ## Why this architecture?
 
-- **No jailbreak, no sideloading, no developer mode.** Switch Control is a first-party Apple feature. Nothing is installed on the iPhone.
-- **Works with any app.** Because control happens at the OS level, your agent can operate any app — including ones that block automation frameworks.
+- **No jailbreak, no sideloading, no developer mode.** Nothing is installed on the iPhone.
+- **Works with any app.** TapKit interacts with the phone through the same visible interface a person uses, rather than relying on app-specific integrations.
 - **Remote by default.** The API layer means your agent can be anywhere. The Mac and phone can be in a closet, a data center, or on your desk.
 
 ## What happens when you run a task
@@ -36,7 +36,7 @@ sequenceDiagram
 
     Agent->>Server: Send command (API / MCP)
     Server->>Mac: Route to host Mac
-    Mac->>Phone: Execute via Switch Control
+    Mac->>Phone: Execute action
     Phone-->>Mac: Updated screen
     Mac-->>Server: Screenshot
     Server-->>Agent: Result
@@ -46,7 +46,7 @@ sequenceDiagram
 
 1. Your agent sends a command to the TapKit API (or MCP server).
 2. The server authenticates the request and routes it to the Mac that's hosting the target phone.
-3. The Mac app executes the action on the phone via Switch Control.
+3. The Mac app executes the action on the phone.
 4. The Mac captures the updated screen and sends it back through the server.
 5. Your agent sees the result and decides what to do next.
 

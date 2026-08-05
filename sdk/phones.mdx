@@ -35,7 +35,6 @@ phones = client.list_phones()
 for phone in phones:
     print(f"{phone.name} ({phone.id})")
     print(f"  Screen: {phone.width}x{phone.height}")
-    print(f"  Unique ID: {phone.unique_id}")
 ```
 
 Get a specific phone by name or ID:
@@ -66,9 +65,8 @@ client.home()
 |----------|------|-------------|
 | `id` | `str` | Server-assigned phone ID |
 | `name` | `str` | Device name (e.g., "iPhone 15 Pro") |
-| `unique_id` | `str` | Hardware identifier |
-| `width` | `int` | Screen width in pixels |
-| `height` | `int` | Screen height in pixels |
+| `width` | `int \| None` | Screen width in pixels when available |
+| `height` | `int \| None` | Screen height in pixels when available |
 | `screen` | `Screen` | Screen object for coordinate utilities |
 
 ## Screen Property

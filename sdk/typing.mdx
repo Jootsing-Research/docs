@@ -1,63 +1,23 @@
 ---
 title: Typing
-description: Text input methods for iOS automation
+description: Type text into iOS apps
 ---
 
-TapKit supports multiple methods for typing text into iOS applications. Each method has different tradeoffs for speed, reliability, and setup requirements.
+Use `phone.type_text()` to enter text into the currently focused field on the phone.
 
-## Typing Methods
-
-### Shortcut Method (Recommended)
-
-The `shortcut` method uses an iOS Shortcut to handle text input via the clipboard. When you call the type API:
-
-1. TapKit places the text you want to type into a server-side clipboard
-2. The TapKit Shortcut is triggered on the device, which fetches the text
-3. The shortcut copies the text to the device clipboard
-4. TapKit uses vision to locate the active text field and performs a tap-and-hold gesture
-5. When the paste menu appears, TapKit taps the "Paste" option
-
-This method is fast and reliable for text of any length. It's the recommended approach for most use cases.
-
-**Setup required:** You must install the TapKit Clipboard shortcut on your iPhone. See [Shortcuts Setup](/setup/shortcuts) for instructions.
+## Basic usage
 
 ```python
-phone.type_text("Hello world", method="shortcut")
-```
-
-### Keys Method
-
-The `keys` method simulates individual keystrokes using switch control automation. Each character is typed one at a time by navigating to the appropriate key on the iOS keyboard.
-
-This method works everywhere without additional setup, but is slower for longer text since each character requires multiple switch control steps.
-
-<Warning>
-The keyboard extension required for the `keys` method is not yet published. Use the `shortcut` method for now. We're working on releasing the keyboard extension soon.
-</Warning>
-
-```python
-phone.type_text("Hello world", method="keys")
-```
-
-## Choosing a Method
-
-| Method | Speed | Setup | Reliability |
-|--------|-------|-------|-------------|
-| `shortcut` | Fast | Requires [shortcut setup](/setup/shortcuts) | High |
-| `keys` | Slow | None (coming soon) | High |
-
-For most use cases, we recommend the `shortcut` method. It's significantly faster for anything beyond a few characters and handles special characters reliably.
-
-## Default Typing Method
-
-Each phone has a default typing method setting that's used when you don't explicitly specify a method. You can configure this via the [settings API](/api-reference/phones/get-settings) or through the dashboard.
-
-```python
-# Uses the phone's default typing method
 phone.type_text("Hello world")
-
-# Explicitly specify a method
-phone.type_text("Hello world", method="shortcut")
 ```
 
-See [Phone Settings](/sdk/settings) for more details on configuring defaults.
+## Focus a field first
+
+Tap the text field before typing:
+
+```python
+phone.tap((300, 500))
+phone.type_text("name@example.com")
+```
+
+The field must be visible and focused before you call `type_text()`.

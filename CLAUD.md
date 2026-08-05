@@ -45,9 +45,9 @@ TapKit documentation for the iPhone automation platform. Covers:
 - SDK: installation, client, phones, screenshots
 - Actions: taps, swipes, drag, pinch
 - Device Control: navigation, lock-unlock, orientation, buttons
-- App Control: open-apps, type-text, shortcuts
+- App Control: open-apps, type-text
 - Geometry: coordinates, bounding-boxes, screen
-- Setup: mac-app, phone, dashboard
+- Setup: mac-app, dashboard
 - API Reference: Full REST API documentation
 
 ## Git workflow
@@ -62,3 +62,5 @@ TapKit documentation for the iPhone automation platform. Covers:
 - Include untested code examples
 - Make assumptions - always ask for clarification
 - Document features that don't exist yet
+- Present Switch Control or Apple Shortcuts as setup requirements or public capabilities
+- Expose internal control or typing methods; describe user-facing actions instead

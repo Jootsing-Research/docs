@@ -28,7 +28,6 @@ curl https://api.tapkit.ai/v1/phones/{phone_id}/status \
   "phone_id": "abc123-def456",
   "phone_name": "iPhone 15 Pro",
   "connection_status": "online",
-  "switch_control_enabled": true,
   "screen_locked": false,
   "streaming": false,
   "width": 1179,
@@ -43,7 +42,6 @@ curl https://api.tapkit.ai/v1/phones/{phone_id}/status \
 | `phone_id` | `string` | Phone identifier |
 | `phone_name` | `string \| null` | Phone display name |
 | `connection_status` | `string` | `online`, `available`, or `offline` |
-| `switch_control_enabled` | `boolean` | Whether Switch Control is active |
 | `screen_locked` | `boolean` | Whether the screen is locked |
 | `streaming` | `boolean` | Whether the phone is currently streaming its screen |
 | `width` | `integer \| null` | Screen width in pixels |
@@ -63,30 +61,11 @@ response = requests.get(
 
 status = response.json()
 print(f"Connection: {status['connection_status']}")
-print(f"Switch Control: {status['switch_control_enabled']}")
 print(f"Screen locked: {status['screen_locked']}")
-```
-
-### Check Before Running a Session
-
-```python
-status = requests.get(
-    f"https://api.tapkit.ai/v1/phones/{phone_id}/status",
-    headers={"X-API-Key": "joot_..."}
-).json()
-
-if status["connection_status"] != "online":
-    print("Phone is not online")
-elif not status["switch_control_enabled"]:
-    print("Switch Control is not enabled")
-elif status["screen_locked"]:
-    print("Screen is locked — unlock first")
-else:
-    print("Ready to go!")
+print(f"Streaming: {status['streaming']}")
 ```
 
 ## Related Endpoints
 
-- [Get Info](/api-reference/phones/get-info) - Get device metadata and settings
+- [Get Info](/api-reference/phones/get-info) - Get device metadata
 - [List Phones](/api-reference/phones/list-phones) - List all phones
-- [Select Phone](/api-reference/phones/select-phone) - Switch the active phone on the Mac

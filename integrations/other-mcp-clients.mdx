@@ -32,31 +32,25 @@ When your client first connects to the TapKit MCP server, you'll be prompted to 
 
 ## Available tools
 
-Once connected, your client has access to all TapKit tools:
+Call `list_phones` first to discover available phones. Every other tool requires a `phone_id` returned by `list_phones`.
+
+Once connected, your client has access to these TapKit tools:
 
 | Tool | Description |
 |------|-------------|
-| `tap(x, y)` | Single tap at coordinates |
-| `double_tap(x, y)` | Double tap |
-| `long_press(x, y)` | Tap and hold |
-| `swipe(x, y, direction)` | Flick gesture |
-| `drag(from_x, from_y, to_x, to_y)` | Drag between points |
-| `hold_and_drag(from_x, from_y, to_x, to_y)` | Long press then drag |
-| `screenshot` | Capture current screen |
-| `open_app(app_name)` | Open any app by name |
-| `copy_text_to_phone(text)` | Copy text to phone's clipboard |
-| `press_home` | Go to home screen |
-| `escape` | Dismiss keyboards/alerts |
-| `lock` / `unlock` | Lock or unlock device |
-| `volume_up` / `volume_down` | Volume controls |
-| `spotlight(query?)` | Open Spotlight search |
-| `activate_siri` | Trigger Siri |
-| `get_phone_info` | Get screen dimensions |
-| `get_phone_status` | Get connection and Switch Control status |
-| `list_phones` | List connected phones |
-| `select_phone(phone_id)` | Select a specific phone |
-| `run_shortcut(index)` | Run an iOS Shortcut by index |
-| `enable_switch_control` | Enable Switch Control |
+| `list_phones` | List available phones |
+| `screenshot(phone_id)` | Capture the current phone screen |
+| `tap(phone_id, x, y)` | Single tap at coordinates |
+| `type_text(phone_id, text)` | Type text into the focused field |
+| `press_home(phone_id)` | Go to the home screen |
+| `swipe(phone_id, x, y, direction)` | Swipe up, down, left, or right |
+| `drag(phone_id, from_x, from_y, to_x, to_y)` | Drag between points |
+| `hold_and_drag(phone_id, from_x, from_y, to_x, to_y, hold_duration_ms?)` | Long press then drag |
+| `double_tap(phone_id, x, y)` | Double tap at coordinates |
+| `long_press(phone_id, x, y, duration?)` | Press and hold at coordinates |
+| `lock(phone_id)` | Lock the phone |
+| `unlock(phone_id)` | Unlock the phone |
+| `get_phone_status(phone_id)` | Get connection and device status |
 
 ## How it works
 
@@ -68,7 +62,7 @@ All coordinates map 1:1 with screenshot pixels. Screenshots are scaled so the lo
 
 ## Tips
 
-- **Auto phone selection** — if only one phone is connected, it's selected automatically. No need to call `list_phones` first.
-- **Multi-phone setups** — every tool accepts an optional `phone_id` parameter for targeting a specific phone.
-- **Clipboard workflow** — use `copy_text_to_phone` to stage text on the clipboard, then tap a text field and paste.
-- **The agent loop** — the standard pattern is: `screenshot` → reason about what's on screen → perform action → `screenshot` again to verify.
+- **Phone discovery** — call `list_phones` first, choose a phone, and pass its `phone_id` to every other tool.
+- **Multi-phone setups** — use the IDs from `list_phones` to target the correct phone on each call.
+- **Text input** — focus a text field, then use `type_text` to enter text.
+- **The agent loop** — the standard pattern is: `screenshot(phone_id)` → reason about what's on screen → perform action → `screenshot(phone_id)` again to verify.

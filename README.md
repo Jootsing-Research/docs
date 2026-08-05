@@ -16,7 +16,7 @@ Preview at `http://localhost:3000`.
 | Tab | Path | What's there |
 |-----|------|--------------|
 | Documentation | `setup/`, `use-cases/` | Getting started, setup guides, use cases |
-| Integrations | `integrations/` | Claude, Codex, MCP, CLI, skills |
+| Integrations | `integrations/` | Claude, Codex, MCP, skills |
 | API Reference | `api-reference/` | REST endpoints for devices, gestures, actions |
 | SDK | `sdk/` | Python SDK reference |
 
